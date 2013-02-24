@@ -1,0 +1,16 @@
+IMPLEMENTATION Windchill
+
+IMPORT Real COMPLETELY
+--IMPORT Nat COMPLETELY
+
+DEF wind(t, v) == a + b * t - c * pow(v, d) + e * t * pow(v,d)
+	WHERE
+	a == "13.12"!
+	b == "0.6215"!
+	c == "11.37"!
+	d == "0.16"!
+	e == "0.3965"!
+
+FUN zinz : real ** real ** real -> real
+DEF zinz == \\k,p,n. k * pow(1+(p/("100"!)),n)
+

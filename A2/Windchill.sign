@@ -1,0 +1,6 @@
+SIGNATURE Windchill
+
+IMPORT Real ONLY real
+
+FUN wind : real ** real -> real
+
