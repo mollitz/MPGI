@@ -1,0 +1,42 @@
+IMPLEMENTATION test
+
+IMPORT Nat COMPLETELY
+
+IMPORT Seq COMPLETELY
+IMPORT SeqMap COMPLETELY
+IMPORT SeqReduce COMPLETELY
+IMPORT SeqFilter COMPLETELY
+IMPORT Com COMPLETELY
+IMPORT ComCompose COMPLETELY
+IMPORT Compose COMPLETELY 
+
+-- 2.1
+DATA anliegen == pass ausweis
+DATA auftrag == auftrag(bZeit:nat, schalter:nat, art:anliegen)
+
+FUN liste : seq[auftrag]
+DEF liste == auftrag(5, 3, pass) :: auftrag(3, 2, pass) :: auftrag(10, 4, ausweis) :: <>
+FUN liste2 : seq[auftrag]
+DEF liste2 == auftrag(5, 3, pass) :: <>
+
+FUN time : seq[auftrag] -> nat
+DEF time(<>) == 0
+DEF time(L) == reduce(+, 0)(map(\\x.bZeit(x))(L))
+
+
+-- 2.2
+
+FUN slowService : seq[auftrag] ** nat -> seq[auftrag]
+DEF slowService(L, n) == filter(\\x.bZeit(x)>n, L)
+
+-- 2.3
+
+FUN h : auftrag ** auftrag -> auftrag
+DEF h(x,y) == IF bZeit(x) > bZeit(y) THEN x ELSE y FI
+
+FUN slowest : seq[auftrag] ** (anliegen -> bool) -> nat
+DEF slowest(L,f) == LET Z == filter(\\x.f(art(x)),L)
+IN
+IF <>?(Z) THEN 0 ELSE
+schalter(reduce(h, ft(Z), Z)) FI
+

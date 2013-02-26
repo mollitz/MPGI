@@ -1,0 +1,51 @@
+1.1 
+Es handelt sich um einen Produkttyp, da er nur einen untertyp enthaelt. 
+Induzierte Signatur
+
+SORT Kunden
+FUN kunde : denotation ** nat ** Eissorte ** umsatz -> Kunden
+FUN kunde? : Kunden -> bool
+FUN name : Kunden -> denotation -- oder ist das mit kunde?
+alter
+lieblingssorte
+umsatze
+
+1.2
+TYPE KUNDEN == kunde(name: denot...)
+               grosskunde(name: deno..,   firmname:deno)
+
+name lieblingssorte umsatz
+1.3
+
+FUN < : betrag ** betrag -> bool
+DEF a<b == IF euro(a) < euro(b) THEN true
+           IF euro(a) = euro(b) THEN
+             IF cent(a) < cent(b) THEN true
+             ELSE false
+             FI
+           ELSE 
+             false
+           FI
+1.4
+FUN guteKunden : seq[Kunden] -> seq[denotation]
+DEF guteKunden(<>) == <>
+DEF guteKunden(l::L) == IF kunde?(l) THEN
+                          IF betrag(24,50) < umsatz(l) THEN
+                            name(l) :: guteKunden(L)
+                          ELSE
+                            guteKunden(L)
+                          FI
+                        ELSE
+                          IF betrag(1000,0) < umsatz(l) THEN
+                            name(l) :: guteKunden(L)
+                          ELSE
+                            guteKunden(L)
+                          FI
+                        FI
+2. 
+FUN time : seq[auftrag] -> nat
+DEF time(<>) == 0
+DEF time(L) == reduce(+, 0) o (map(\\x.bZeit(x))(L))
+
+
+
